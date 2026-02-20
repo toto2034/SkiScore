@@ -64,6 +64,9 @@ public class SkiLocationService extends Service {
     private long    startTimeMs       = 0L;
     private Location lastLocation     = null;
 
+    /** Esposta staticamente per lettura rapida dall'Activity (es. SOS) */
+    public static volatile Location lastKnownLocation = null;
+
     // Stats
     private float totalDistanceMeters = 0f;
     private float maxSpeedKmh         = 0f;
@@ -230,6 +233,7 @@ public class SkiLocationService extends Service {
         }
 
         lastLocation = location;
+        lastKnownLocation = location; // esposta staticamente per SOS
     }
 
     /**

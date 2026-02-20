@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
-    android:layout_height="wrap_content"
+    android:id="@+id/item_forecast_root"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
     android:layout_marginEnd="10dp"
     android:background="@drawable/bg_forecast_card"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="10dp">
 
+    <!-- Giorno (es. "Lun", "Mar") -->
     <TextView
         android:id="@+id/tv_forecast_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ice_blue"
-        android:textSize="13sp"
-        android:textStyle="bold" />
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
+    <!-- Icona meteo emoji -->
     <TextView
         android:id="@+id/tv_forecast_emoji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textSize="28sp" />
+        android:layout_marginTop="4dp"
+        android:textSize="26sp" />
 
+    <!-- Temperature min/max -->
     <TextView
         android:id="@+id/tv_forecast_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:textColor="@color/snow_white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:maxLines="1" />
 
+    <!-- Neve (visibile solo se > 0) -->
     <TextView
         android:id="@+id/tv_forecast_snow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:textColor="@color/neon_cyan"
-        android:textSize="12sp" />
+        android:textSize="10sp"
+        android:maxLines="1" />
 
+    <!-- Vento -->
     <TextView
         android:id="@+id/tv_forecast_wind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="1dp"
         android:textColor="@color/ice_blue_50"
-        android:textSize="11sp" />
+        android:textSize="10sp"
+        android:maxLines="1" />
 
 </LinearLayout>

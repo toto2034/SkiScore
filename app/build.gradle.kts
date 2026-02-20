@@ -56,6 +56,14 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.localbroadcastmanager)
 
+    // Room (local database)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
+    // Glide (image loading — webcam feed)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

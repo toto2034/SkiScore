@@ -22,12 +22,16 @@ import it.unisa.skiscore.api.OwmCurrentResponse;
 import it.unisa.skiscore.api.OwmForecastResponse;
 import it.unisa.skiscore.model.DailyForecast;
 import it.unisa.skiscore.model.SkiResort;
+import it.unisa.skiscore.model.WebcamModel;
 import it.unisa.skiscore.model.WeatherData;
 import it.unisa.skiscore.ui.ForecastAdapter;
 import it.unisa.skiscore.ui.SkiScoreView;
+import it.unisa.skiscore.ui.WebcamAdapter;
 import it.unisa.skiscore.util.FavoritesManager;
 import it.unisa.skiscore.util.SkiScoreCalculator;
 import it.unisa.skiscore.util.WeatherCodeMapper;
+import it.unisa.skiscore.util.WeatherMapper;
+import it.unisa.skiscore.util.WebcamRepository;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +56,8 @@ public class ResortDetailActivity extends AppCompatActivity {
     private ImageView ivBack, ivFav;
     private ProgressBar progressBar;
     private RecyclerView rvForecast;
+    private WebcamAdapter webcamAdapter;
+    private android.widget.LinearLayout llWebcamSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,7 @@ public class ResortDetailActivity extends AppCompatActivity {
         initViews();
         loadResortFromIntent();
         setupClickListeners();
+        setupWebcams();
         fetchWeather();
     }
 
@@ -100,6 +107,29 @@ public class ResortDetailActivity extends AppCompatActivity {
         rvForecast.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecast.setAdapter(forecastAdapter);
+        // Resort info is set in loadResortFromIntent() after the adapter is created
+
+        llWebcamSection = findViewById(R.id.ll_webcam_section);
+        RecyclerView rvWebcams = findViewById(R.id.rv_webcams);
+        webcamAdapter = new WebcamAdapter();
+        rvWebcams.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvWebcams.setAdapter(webcamAdapter);
+    }
+
+    /**
+     * Looks up webcams for this resort via WebcamRepository.
+     * Shows ll_webcam_section only if at least one webcam is found.
+     */
+    private void setupWebcams() {
+        if (resort == null) return;
+        List<WebcamModel> cams = WebcamRepository.getWebcamsForResort(resort.getName());
+        if (!cams.isEmpty()) {
+            webcamAdapter.setWebcams(cams);
+            llWebcamSection.setVisibility(android.view.View.VISIBLE);
+        } else {
+            llWebcamSection.setVisibility(android.view.View.GONE);
+        }
     }
 
     private void loadResortFromIntent() {
@@ -114,6 +144,9 @@ public class ResortDetailActivity extends AppCompatActivity {
         tvName.setText(name);
         tvLocation.setText(country != null ? country : "");
         updateFavoriteIcon();
+
+        // Give the ForecastAdapter the context it needs to open HourlyForecastActivity
+        forecastAdapter.setResortInfo(name, lat, lon);
     }
 
     private void setupClickListeners() {
@@ -154,7 +187,7 @@ public class ResortDetailActivity extends AppCompatActivity {
                     public void onResponse(Call<OwmCurrentResponse> call,
                                            Response<OwmCurrentResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            WeatherData data = MainActivity.mapOwmCurrentToWeatherData(response.body());
+                            WeatherData data = WeatherMapper.mapOwmCurrentToWeatherData(response.body());
                             resort.setWeatherData(data);
                             resort.setSkiScore(SkiScoreCalculator.calculateSkiScore(data));
 
@@ -205,7 +238,7 @@ public class ResortDetailActivity extends AppCompatActivity {
                                            Response<OwmForecastResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             List<DailyForecast> forecasts =
-                                    MainActivity.aggregateForecast(response.body());
+                                    WeatherMapper.aggregateForecast(response.body());
                             if (resort.getWeatherData() != null) {
                                 resort.getWeatherData().setForecast(forecasts);
                             }

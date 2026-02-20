@@ -39,6 +39,11 @@
             android:parentActivityName=".MainActivity" />
 
         <activity
+            android:name=".HourlyForecastActivity"
+            android:exported="false"
+            android:parentActivityName=".ResortDetailActivity" />
+
+        <activity
             android:name=".tracker.TrackerActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />

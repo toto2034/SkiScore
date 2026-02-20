@@ -69,7 +69,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp" />
 
-        <!-- Current Conditions Section -->
+        <!-- Current Conditions Section header -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,175 +80,167 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium" />
 
-        <!-- Conditions Grid (2x2) -->
-        <LinearLayout
+        <!-- Conditions Grid (2×2) — all 4 cells same fixed height for perfect symmetry -->
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="vertical">
+            android:columnCount="2"
+            android:rowCount="2"
+            android:useDefaultMargins="false">
 
-            <!-- Row 1: Temperature + Wind -->
+            <!-- Temperature Cell -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="14dp">
 
-                <!-- Temperature Card -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/bg_detail_card"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="🌡️ Temperatura"
+                    android:textColor="@color/ice_blue"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🌡️ Temperatura"
-                        android:textColor="@color/ice_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/snow_white"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_feels_like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/ice_blue_50"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_temp_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/ice_blue_50"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Wind Card -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_detail_temp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:background="@drawable/bg_detail_card"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/snow_white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="💨 Vento"
-                        android:textColor="@color/ice_blue"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tv_detail_feels_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/ice_blue_50"
+                    android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/tv_detail_wind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/snow_white"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_detail_temp_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/ice_blue_50"
+                    android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/tv_detail_wind_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/ice_blue_50"
-                        android:textSize="12sp" />
-                </LinearLayout>
             </LinearLayout>
 
-            <!-- Row 2: Snow + Visibility -->
+            <!-- Wind Cell -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="14dp">
 
-                <!-- Snow Card -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/bg_detail_card"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="💨 Vento"
+                    android:textColor="@color/ice_blue"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🌨️ Neve"
-                        android:textColor="@color/ice_blue"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_snow_fresh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/snow_white"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_snow_depth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/ice_blue_50"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Visibility Card -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_detail_wind"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:background="@drawable/bg_detail_card"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/snow_white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👁️ Visibilità"
-                        android:textColor="@color/ice_blue"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tv_detail_wind_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/ice_blue_50"
+                    android:textSize="11sp" />
 
-                    <TextView
-                        android:id="@+id/tv_detail_visibility"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/snow_white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_visibility_emoji"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textSize="32sp" />
-                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+            <!-- Snow Cell -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌨️ Neve"
+                    android:textColor="@color/ice_blue"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_detail_snow_fresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/snow_white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_detail_snow_depth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/ice_blue_50"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <!-- Visibility Cell -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👁️ Visibilità"
+                    android:textColor="@color/ice_blue"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_detail_visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/snow_white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_detail_visibility_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="28sp" />
+
+            </LinearLayout>
+
+        </GridLayout>
 
         <!-- Forecast Section -->
         <TextView
@@ -267,6 +259,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:clipToPadding="false" />
+
+        <!-- Live Webcam Section (hidden when no webcam available) -->
+        <LinearLayout
+            android:id="@+id/ll_webcam_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📷 Live Webcam"
+                android:textColor="@color/ice_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_webcams"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingEnd="4dp"
+                android:clipToPadding="false" />
+
+        </LinearLayout>
 
         <!-- Loading Indicator -->
         <ProgressBar

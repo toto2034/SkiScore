@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/sharp_device_thermostat_24"
+        android:title="Meteo" />
+
+    <item
+        android:id="@+id/nav_tracker"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="Tracker" />
+
+    <item
+        android:id="@+id/nav_diary"
+        android:icon="@drawable/outline_data_usage_24"
+        android:title="Diario Sciate" />
+
+</menu>

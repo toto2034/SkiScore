@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_margin="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#141E33">
+
+    <!-- Webcam image — fills the whole card -->
+    <ImageView
+        android:id="@+id/iv_webcam"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Webcam" />
+
+    <!-- Loading spinner centered, shown until image loads -->
+    <ProgressBar
+        android:id="@+id/pb_webcam_loading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="#00E5FF"
+        android:visibility="visible" />
+
+    <!-- Dark gradient scrim at the bottom for text legibility -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/webcam_gradient_scrim" />
+
+    <!-- Play button overlay — shown only for video/YouTube type -->
+    <ImageView
+        android:id="@+id/iv_play_overlay"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_media_play"
+        android:background="#99000000"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:contentDescription="Riproduci" />
+
+    <!-- Webcam name overlay, bottom-left -->
+    <TextView
+        android:id="@+id/tv_webcam_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:shadowColor="#AA000000"
+        android:shadowRadius="4"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:text="Webcam" />
+
+</androidx.cardview.widget.CardView>

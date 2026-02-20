@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_bg">
+
+    <!-- Header: back button + title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_hourly_back"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:contentDescription="Indietro"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/tv_hourly_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/snow_white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ice_blue_50"
+        android:alpha="0.3" />
+
+    <!-- Loading indicator -->
+    <ProgressBar
+        android:id="@+id/hourly_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:indeterminateTint="@color/neon_cyan"
+        android:visibility="gone" />
+
+    <!-- Empty state message -->
+    <TextView
+        android:id="@+id/tv_hourly_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="Nessuna previsione oraria disponibile per questo giorno."
+        android:textColor="@color/ice_blue_50"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Vertical list of 3-hour slots -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hourly"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

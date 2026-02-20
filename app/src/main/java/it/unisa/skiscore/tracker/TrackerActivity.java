@@ -1,5 +1,9 @@
 package it.unisa.skiscore.tracker;
 
+import it.unisa.skiscore.db.AppDatabase;
+import it.unisa.skiscore.db.SkiSession;
+import it.unisa.skiscore.db.SkiSessionDao;
+
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,9 +45,18 @@ public class TrackerActivity extends AppCompatActivity {
     // ---- Views ----
     private TextView tvSpeed, tvDistance, tvTime, tvMaxSpeed, tvAvgSpeed, tvChairlift;
     private MaterialButton btnStartStop;
+    private MaterialButton btnSos;
     private ImageButton btnBack;
 
     private boolean isTracking = false;
+
+    /** Single-thread executor for Room operations (never run DB on Main Thread) */
+    private final java.util.concurrent.ExecutorService dbExecutor =
+            java.util.concurrent.Executors.newSingleThreadExecutor();
+
+    /** Last stats received from Service broadcast — used to persist on STOP */
+    private float lastSpeed = 0f, lastDistance = 0f, lastMaxSpeed = 0f, lastAvgSpeed = 0f;
+    private long  lastElapsedMs = 0L;
 
     // ---- Cronometro UI (indipendente dal GPS, 200ms) ----
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
@@ -81,6 +94,13 @@ public class TrackerActivity extends AppCompatActivity {
 
             // Banner seggiovia
             tvChairlift.setVisibility(onLift ? View.VISIBLE : View.GONE);
+
+            // Cache per salvataggio su DB alla pressione di STOP
+            lastSpeed     = speed;
+            lastDistance  = distance;
+            lastMaxSpeed  = maxSpeed;
+            lastAvgSpeed  = avgSpeed;
+            lastElapsedMs = intent.getLongExtra(SkiLocationService.EXTRA_ELAPSED_MS, 0L);
         }
     };
 
@@ -131,14 +151,49 @@ public class TrackerActivity extends AppCompatActivity {
         tvAvgSpeed   = findViewById(R.id.tv_avg_speed);
         tvChairlift  = findViewById(R.id.tv_chairlift_warning);
         btnStartStop = findViewById(R.id.btnStartStop);
+        btnSos       = findViewById(R.id.btn_sos);
         btnBack      = findViewById(R.id.btn_back_tracker);
 
         btnBack.setOnClickListener(v -> finish());
+
+        // SOS: long-press per evitare pressioni accidentali in tasca
+        btnSos.setOnLongClickListener(v -> {
+            triggerEmergencySOS();
+            return true;
+        });
+        // Short press: avvisa l'utente di usare il long-press
+        btnSos.setOnClickListener(v ->
+            Toast.makeText(this, "Tieni premuto per inviare SOS", Toast.LENGTH_SHORT).show()
+        );
 
         btnStartStop.setOnClickListener(v -> {
             if (!isTracking) checkPermissionsAndStart();
             else             stopTracking();
         });
+
+        // Richiedi i permessi GPS all'avvio, così sono pronti prima del tasto START
+        requestPermissionsIfNeeded();
+    }
+
+    /**
+     * Controlla e richiede i permessi necessari appena l'Activity si apre.
+     * Non blocca l'accesso alla schermata — l'utente può vedere il layout
+     * mentre il dialog di sistema compare.
+     */
+    private void requestPermissionsIfNeeded() {
+        boolean hasFine = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (!hasFine) {
+            String[] perms = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                    ? new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.POST_NOTIFICATIONS}
+                    : new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION};
+            locationPermLauncher.launch(perms);
+        }
     }
 
     @Override
@@ -252,6 +307,70 @@ public class TrackerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SkiLocationService.class);
         intent.setAction(SkiLocationService.ACTION_STOP);
         startService(intent);
+
+        // Salva la sessione nel database Room in background
+        saveSessionToDatabase();
+    }
+
+    /**
+     * Crea una SkiSession con i dati dell'ultima discesa e la inserisce nel database
+     * su un thread separato tramite ExecutorService (Room non consente operazioni sul Main Thread).
+     */
+    private void saveSessionToDatabase() {
+        final SkiSession session = new SkiSession(
+                System.currentTimeMillis(), // date: timestamp attuale
+                lastElapsedMs,              // duration in ms
+                lastMaxSpeed,               // km/h
+                lastAvgSpeed,               // km/h
+                lastDistance,               // km
+                SkiLocationService.lastKnownLocation != null
+                        ? (float) SkiLocationService.lastKnownLocation.getAltitude() : 0f
+        );
+
+        dbExecutor.execute(() -> {
+            SkiSessionDao dao = AppDatabase.getInstance(TrackerActivity.this).skiSessionDao();
+            dao.insert(session);
+            // Feedback all'utente sul Main Thread
+            runOnUiThread(() -> android.widget.Toast.makeText(
+                    TrackerActivity.this,
+                    String.format("✅ Sessione salvata! %.1f km · %.0f km/h max",
+                            lastDistance, lastMaxSpeed),
+                    android.widget.Toast.LENGTH_LONG
+            ).show());
+        });
+    }
+
+    // -------- S.O.S. --------
+
+    /**
+     * Recupera l'ultima posizione GPS nota e apre il selettore di condivisione Android
+     * con un messaggio di emergenza precompilato contenente link Google Maps.
+     */
+    private void triggerEmergencySOS() {
+        android.location.Location loc = SkiLocationService.lastKnownLocation;
+
+        String message;
+        if (loc != null) {
+            double lat = loc.getLatitude();
+            double lon = loc.getLongitude();
+            double alt = loc.getAltitude();
+            message = String.format(
+                    "EMERGENZA: Ho bisogno di aiuto. " +
+                    "Mi trovo a questa posizione: " +
+                    "https://maps.google.com/?q=%.6f,%.6f " +
+                    "- Altitudine: %.0fm.",
+                    lat, lon, alt);
+        } else {
+            // Posizione non ancora disponibile
+            message = "EMERGENZA: Ho bisogno di aiuto sulle piste da sci. " +
+                      "Posizione GPS non disponibile al momento.";
+        }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message);
+        // Apre il selettore (WhatsApp, SMS, Telegram, ecc.)
+        startActivity(Intent.createChooser(shareIntent, "Invia SOS tramite…"));
     }
 
     // -------- Utility --------

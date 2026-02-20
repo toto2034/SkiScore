@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Error drawable: "no signal" shown when webcam URL fails -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Dark background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A2940" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    <!-- Centered "no signal" icon approximated with text/vector path -->
+    <item
+        android:gravity="center"
+        android:width="64dp"
+        android:height="64dp">
+        <shape android:shape="oval">
+            <solid android:color="#33FF1744" />
+            <stroke android:width="2dp" android:color="#FF1744" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_card_resort"
+    android:padding="16dp">
+
+    <!-- Resort Name -->
+    <TextView
+        android:id="@+id/tv_resort_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/snow_white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@id/ski_score_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Resort Location -->
+    <TextView
+        android:id="@+id/tv_resort_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/ice_blue_50"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@id/ski_score_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_resort_name" />
+
+    <!-- Current Temp + Condition -->
+    <TextView
+        android:id="@+id/tv_current_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/snow_white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_resort_location" />
+
+    <TextView
+        android:id="@+id/tv_condition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/ice_blue"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@id/tv_current_temp"
+        app:layout_constraintEnd_toStartOf="@id/ski_score_view"
+        app:layout_constraintStart_toEndOf="@id/tv_current_temp"
+        app:layout_constraintTop_toTopOf="@id/tv_current_temp" />
+
+    <!-- Ski Score Ring -->
+    <it.unisa.skiscore.ui.SkiScoreView
+        android:id="@+id/ski_score_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Favorite button -->
+    <ImageView
+        android:id="@+id/iv_favorite"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@android:drawable/btn_star_big_off"
+        android:contentDescription="@string/add_favorite"
+        app:tint="@color/neon_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ski_score_view"
+        android:layout_marginTop="4dp" />
+
+    <!-- Info Pills Row -->
+    <LinearLayout
+        android:id="@+id/ll_info_pills"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_temp">
+
+        <!-- Snow Pill -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_info_pill"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌨️"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_snow_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/snow_white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/snow"
+                android:textColor="@color/ice_blue_50"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Wind Pill -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_info_pill"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💨"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_wind_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/snow_white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wind"
+                android:textColor="@color/ice_blue_50"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Visibility Pill -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_info_pill"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_visibility_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_visibility_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/snow_white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/visibility"
+                android:textColor="@color/ice_blue_50"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Temperature Pill -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_info_pill"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_temp_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/snow_white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/temperature"
+                android:textColor="@color/ice_blue_50"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

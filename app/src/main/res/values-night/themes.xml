@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.SkiScore" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/neon_cyan</item>
+        <item name="colorOnPrimary">@color/dark_bg</item>
+        <item name="colorPrimaryContainer">@color/dark_surface_variant</item>
+        <item name="colorOnPrimaryContainer">@color/neon_cyan</item>
+        <item name="colorSecondary">@color/ice_blue</item>
+        <item name="colorOnSecondary">@color/dark_bg</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/snow_white</item>
+        <item name="colorSurfaceVariant">@color/dark_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/ice_blue</item>
+        <item name="android:windowBackground">@color/dark_bg</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:navigationBarColor">@color/dark_bg</item>
+    </style>
+</resources>

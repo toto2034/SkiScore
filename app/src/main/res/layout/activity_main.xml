@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg"
+    tools:context=".MainActivity">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tv_app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⛷️ SkiScore"
+        android:textColor="@color/snow_white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Indice di Sciabilità"
+        android:textColor="@color/ice_blue"
+        android:textSize="14sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_title" />
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_search_bar"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="12dp"
+        android:drawableTint="@color/ice_blue_50"
+        android:hint="@string/search_hint"
+        android:textColorHint="@color/text_hint"
+        android:textColor="@color/snow_white"
+        android:textSize="15sp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
+
+    <!-- Search Results RecyclerView (overlay) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_results"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_card_resort"
+        android:elevation="8dp"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:maxHeight="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search" />
+
+    <!-- Section Label -->
+    <TextView
+        android:id="@+id/tv_section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favorites"
+        android:textColor="@color/ice_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search" />
+
+    <!-- Resort Cards -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_resorts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_section_label" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/ll_empty_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_section_label">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏔️"
+            android:textSize="64sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/no_favorites"
+            android:textColor="@color/ice_blue_50"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp" />
+    </LinearLayout>
+
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/neon_cyan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_section_label" />
+
+    <!-- Tracker FAB -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_tracker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎿 Tracker"
+        android:textColor="#0B1224"
+        android:textStyle="bold"
+        app:backgroundTint="#00E5FF"
+        app:icon="@null"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

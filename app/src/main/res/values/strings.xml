@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">SkiScore</string>
+    <string name="search_hint">Cerca località sciistica…</string>
+    <string name="favorites">Preferiti</string>
+    <string name="popular">Popolari</string>
+    <string name="skiability_score">Indice di Sciabilità</string>
+    <string name="temperature">Temperatura</string>
+    <string name="wind">Vento</string>
+    <string name="snow">Neve</string>
+    <string name="visibility">Visibilità</string>
+    <string name="avalanche_risk">Rischio Valanghe</string>
+    <string name="forecast">Previsioni</string>
+    <string name="feels_like">Percepita</string>
+    <string name="fresh_snow_48h">Neve fresca 48h</string>
+    <string name="snow_depth">Base neve</string>
+    <string name="no_favorites">Nessun preferito ancora.\nCerca e aggiungi le tue località!</string>
+    <string name="loading">Caricamento…</string>
+    <string name="error_network">Errore di rete. Controlla la connessione.</string>
+    <string name="error_generic">Si è verificato un errore.</string>
+    <string name="add_favorite">Aggiungi ai preferiti</string>
+    <string name="remove_favorite">Rimuovi dai preferiti</string>
+    <string name="score_percent">%1$d%%</string>
+    <string name="temp_format">%1$.0f°C</string>
+    <string name="wind_format">%1$.0f km/h</string>
+    <string name="snow_format">%1$.0f cm</string>
+    <string name="min_max_temp">%1$.0f° / %2$.0f°</string>
+    <string name="current_conditions">Condizioni Attuali</string>
+    <string name="score_excellent">Eccellente</string>
+    <string name="score_good">Buono</string>
+    <string name="score_fair">Discreto</string>
+    <string name="score_poor">Scarso</string>
+    <string name="no_data">N/D</string>
+</resources>

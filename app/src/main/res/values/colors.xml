@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- SkiScore Dark Palette -->
+    <color name="dark_bg">#0B1224</color>
+    <color name="dark_surface">#141E33</color>
+    <color name="dark_surface_variant">#1C2A45</color>
+    <color name="dark_elevated">#243352</color>
+
+    <!-- Text Colors -->
+    <color name="snow_white">#F0F4FF</color>
+    <color name="ice_blue">#A8C8FF</color>
+    <color name="ice_blue_50">#80A8C8FF</color>
+    <color name="text_hint">#5580A0CC</color>
+
+    <!-- Neon Accents -->
+    <color name="neon_cyan">#00E5FF</color>
+    <color name="neon_cyan_20">#3300E5FF</color>
+    <color name="neon_yellow">#FFD600</color>
+    <color name="neon_yellow_20">#33FFD600</color>
+    <color name="neon_red">#FF1744</color>
+    <color name="neon_red_20">#33FF1744</color>
+    <color name="neon_green">#69F0AE</color>
+
+    <!-- Score Ring Track -->
+    <color name="ring_track">#1A80A0CC</color>
+
+    <!-- Status Bar -->
+    <color name="status_bar">#060D1A</color>
+</resources>
